@@ -5,7 +5,7 @@
 
 #include "ConstantBufferD3D11.h"
 
-struct ProjectionInfo //tes
+struct ProjectionInfo //help
 {
 	float fovAngleY = 0.0f;
 	float aspectRatio = 0.0f;
