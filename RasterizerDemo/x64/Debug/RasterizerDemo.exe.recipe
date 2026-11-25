@@ -2,15 +2,15 @@
 <Project>
   <ProjectOutputs>
     <ProjectOutput>
-      <FullPath>C:\Users\Hajic\OneDrive - BTH Student\Documents\3D-prog\Project\AbstractionHeaders (2)\RasterizerDemo\x64\Debug\RasterizerDemo.exe</FullPath>
+      <FullPath>C:\Users\Hajic\OneDrive - BTH Student\Documents\3D-prog\Project\RasterizerDemo\x64\Debug\RasterizerDemo.exe</FullPath>
     </ProjectOutput>
   </ProjectOutputs>
   <ContentFiles>
     <ContentFile>
-      <FullPath>C:\Users\Hajic\OneDrive - BTH Student\Documents\3D-prog\Project\AbstractionHeaders (2)\RasterizerDemo\RasterizerDemo\PixelShader.cso</FullPath>
+      <FullPath>C:\Users\Hajic\OneDrive - BTH Student\Documents\3D-prog\Project\RasterizerDemo\RasterizerDemo\PixelShader.cso</FullPath>
     </ContentFile>
     <ContentFile>
-      <FullPath>C:\Users\Hajic\OneDrive - BTH Student\Documents\3D-prog\Project\AbstractionHeaders (2)\RasterizerDemo\RasterizerDemo\VertexShader.cso</FullPath>
+      <FullPath>C:\Users\Hajic\OneDrive - BTH Student\Documents\3D-prog\Project\RasterizerDemo\RasterizerDemo\VertexShader.cso</FullPath>
     </ContentFile>
   </ContentFiles>
   <SatelliteDlls />
