@@ -58,3 +58,19 @@ VertexBufferD3D11::~VertexBufferD3D11()
 		buffer = nullptr;
 	}
 }
+
+UINT VertexBufferD3D11::GetNrOfVertices() const
+{
+	return this->nrOfVertices;
+}
+
+UINT VertexBufferD3D11::GetVertexSize() const
+{
+	return this->vertexSize;
+}
+
+ID3D11Buffer* VertexBufferD3D11::GetBuffer() const
+{
+	return this->buffer;
+}
+

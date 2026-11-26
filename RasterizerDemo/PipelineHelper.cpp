@@ -1,12 +1,13 @@
 #include <fstream>
 #include <string>
 #include <iostream>
-//#include ´"WindowHelper.h"
+
 
 #define STB_IMAGE_IMPLEMENTATION
 #include "PipelineHelper.h"
 #include "WindowHelper.h"
 #include "stb_image.h"
+#include "VertexBufferD3D11.h"
 
 using namespace std;
 
@@ -161,7 +162,7 @@ bool CreateInputLayout(ID3D11Device* device, ID3D11InputLayout*& inputLayout, co
 }
 
 //Create vertex buffer
-bool CreateVertexBuffer(ID3D11Device* device, ID3D11Buffer*& vertexBuffer)
+bool CreateVertexBuffer(ID3D11Device* device, VertexBufferD3D11& vertexBuffer)
 {
 	//Clockwise by default in D3D11
 	SimpleVertex quad[] =
@@ -172,28 +173,13 @@ bool CreateVertexBuffer(ID3D11Device* device, ID3D11Buffer*& vertexBuffer)
 		{ {0.5, -0.5f, 0.0f}, {0, 0, -1}, {1, 1}},
 	};
 
-	//Define buffer description
-	D3D11_BUFFER_DESC bufferDesc;
-	bufferDesc.ByteWidth = sizeof(quad);
-	bufferDesc.Usage = D3D11_USAGE_IMMUTABLE;
-	bufferDesc.BindFlags = D3D11_BIND_VERTEX_BUFFER;
-	bufferDesc.CPUAccessFlags = 0;
-	bufferDesc.MiscFlags = 0;
-	bufferDesc.StructureByteStride = 0;
+	vertexBuffer.Initialize(device, sizeof(SimpleVertex), 4, quad);
 
-	//Define subresources
-	D3D11_SUBRESOURCE_DATA data;
-	data.pSysMem = quad;
-	data.SysMemPitch = 0;
-	data.SysMemSlicePitch = 0;
-
-	//Create vertexbuffer
-	HRESULT hr = device->CreateBuffer(&bufferDesc, &data, &vertexBuffer);
-	return !FAILED(hr);
+	return true;
 }
 
 //Setup for everything
-bool SetupPipeline(ID3D11Device* device, ID3D11Buffer*& vertexBuffer, ID3D11VertexShader*& vShader, ID3D11PixelShader*& pShader, ID3D11InputLayout*& inputLayout,
+bool SetupPipeline(ID3D11Device* device, VertexBufferD3D11& vertexBuffer, ID3D11VertexShader*& vShader, ID3D11PixelShader*& pShader, ID3D11InputLayout*& inputLayout,
 	               ID3D11Texture2D*& texture, ID3D11ShaderResourceView*& srv, ID3D11SamplerState*& samplerState)
 {
 	std::string vShaderByteCode;

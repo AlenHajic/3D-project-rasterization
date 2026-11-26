@@ -1,11 +1,5 @@
-﻿  compilation object save succeeded; see C:\Users\Hajic\OneDrive - BTH Student\Documents\3D-prog\Project\RasterizerDemo\RasterizerDemo\PixelShader.cso
-  compilation object save succeeded; see C:\Users\Hajic\OneDrive - BTH Student\Documents\3D-prog\Project\RasterizerDemo\RasterizerDemo\VertexShader.cso
-  ConstantBufferHelper.cpp
-  D3D11Helper.cpp
-  Main.cpp
-  MatricesHelper.cpp
+﻿  Main.cpp
   PipelineHelper.cpp
-  WindowHelper.cpp
+  VertexBufferD3D11.cpp
   Generating Code...
-  LINK : C:\Users\Hajic\OneDrive - BTH Student\Documents\3D-prog\Project\RasterizerDemo\x64\Debug\RasterizerDemo.exe not found or not built by the last incremental link; performing full link
   RasterizerDemo.vcxproj -> C:\Users\Hajic\OneDrive - BTH Student\Documents\3D-prog\Project\RasterizerDemo\x64\Debug\RasterizerDemo.exe

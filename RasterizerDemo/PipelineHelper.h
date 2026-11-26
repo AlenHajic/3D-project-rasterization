@@ -2,6 +2,8 @@
 #include <d3d11.h>
 #include <string>
 
+#include "VertexBufferD3D11.h"
+
 using namespace std;
 
 struct SimpleVertex
@@ -23,7 +25,7 @@ struct SimpleVertex
 	}
 };
 
-bool SetupPipeline(ID3D11Device * device, ID3D11Buffer *& vertexBuffer, ID3D11VertexShader *& vShader, ID3D11PixelShader *& pShader, ID3D11InputLayout *& inputLayout, 
+bool SetupPipeline(ID3D11Device * device, VertexBufferD3D11& vertexBuffer, ID3D11VertexShader *& vShader, ID3D11PixelShader *& pShader, ID3D11InputLayout *& inputLayout, 
 	               ID3D11Texture2D*& texture, ID3D11ShaderResourceView*& srv, ID3D11SamplerState*& samplerState);
 bool LoadTexture(ID3D11Device* device, ID3D11Texture2D*& texture, ID3D11ShaderResourceView*& srv, const char* filename);
 bool CreateSamplerState(ID3D11Device* device, ID3D11SamplerState*& samplerState);

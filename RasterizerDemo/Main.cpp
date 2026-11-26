@@ -9,6 +9,7 @@
 #include "PipelineHelper.h"
 #include "ConstantBufferHelper.h"
 #include "MatricesHelper.h"
+#include "VertexBufferD3D11.h"
 
 #define _CRTDBG_MAP_ALLOC
 
@@ -16,16 +17,19 @@ using namespace DirectX;
 
 void Render(ID3D11DeviceContext* immediateContext, ID3D11RenderTargetView* rtv,
 			ID3D11DepthStencilView* dsView, D3D11_VIEWPORT& viewport, ID3D11VertexShader* vShader,
-			ID3D11PixelShader* pShader, ID3D11InputLayout* inputLayout, ID3D11Buffer* vertexBuffer,
+			ID3D11PixelShader* pShader, ID3D11InputLayout* inputLayout, const VertexBufferD3D11& vertexBuffer,
 	       ID3D11ShaderResourceView* srv, ID3D11SamplerState* samplerState)
 {
 	float clearColour[4] = { 0, 0, 0, 0 };
 	immediateContext->ClearRenderTargetView(rtv, clearColour);
 	immediateContext->ClearDepthStencilView(dsView, D3D11_CLEAR_DEPTH | D3D11_CLEAR_STENCIL, 1, 0);
 
-	UINT stride = sizeof(SimpleVertex);
+	UINT stride = vertexBuffer.GetVertexSize();
 	UINT offset = 0;
-	immediateContext->IASetVertexBuffers(0, 1, &vertexBuffer, &stride, &offset);
+
+	ID3D11Buffer* VertexBuffer = vertexBuffer.GetBuffer();
+
+	immediateContext->IASetVertexBuffers(0, 1, &VertexBuffer, &stride, &offset);
 	immediateContext->IASetInputLayout(inputLayout);
 	immediateContext->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLESTRIP);
 
@@ -41,7 +45,7 @@ void Render(ID3D11DeviceContext* immediateContext, ID3D11RenderTargetView* rtv,
 
 	immediateContext->OMSetRenderTargets(1, &rtv, dsView);
 
-	immediateContext->Draw(4, 0);
+	immediateContext->Draw(vertexBuffer.GetNrOfVertices(), 0);
 }
 
 int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
@@ -80,7 +84,7 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
 
 	ID3D11InputLayout* inputLayout;
 
-	ID3D11Buffer* vertexBuffer;
+	VertexBufferD3D11 vertexBuffer;
 	ID3D11Buffer* VSConstBuffer = nullptr;
 	ID3D11Buffer* PSConstBuffer = nullptr;
 
@@ -148,7 +152,7 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
 		swapChain->Present(0, 0);
 	}
 
-	vertexBuffer->Release();
+	/*vertexBuffer.~VertexBufferD3D11();*/  //destuctor calls itself automatically
 	VSConstBuffer->Release();
 	PSConstBuffer->Release();
 	inputLayout->Release();
