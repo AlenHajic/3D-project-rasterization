@@ -151,6 +151,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="ConstantBufferD3D11.cpp" />
     <ClCompile Include="ConstantBufferHelper.cpp" />
     <ClCompile Include="D3D11Helper.cpp" />
     <ClCompile Include="Main.cpp" />

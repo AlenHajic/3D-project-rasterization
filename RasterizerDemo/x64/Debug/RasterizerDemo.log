@@ -1,5 +1,2 @@
-﻿  Main.cpp
-  PipelineHelper.cpp
-  VertexBufferD3D11.cpp
-  Generating Code...
+﻿  ConstantBufferHelper.cpp
   RasterizerDemo.vcxproj -> C:\Users\Hajic\OneDrive - BTH Student\Documents\3D-prog\Project\RasterizerDemo\x64\Debug\RasterizerDemo.exe

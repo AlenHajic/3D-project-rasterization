@@ -1,6 +1,7 @@
 #pragma once
 
 #include <d3d11_4.h>
+#include <stdexcept>
 
 class ConstantBufferD3D11
 {

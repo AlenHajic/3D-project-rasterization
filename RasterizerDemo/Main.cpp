@@ -9,7 +9,9 @@
 #include "PipelineHelper.h"
 #include "ConstantBufferHelper.h"
 #include "MatricesHelper.h"
+
 #include "VertexBufferD3D11.h"
+#include "ConstantBufferD3D11.h"
 
 #define _CRTDBG_MAP_ALLOC
 
@@ -85,8 +87,8 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
 	ID3D11InputLayout* inputLayout;
 
 	VertexBufferD3D11 vertexBuffer;
-	ID3D11Buffer* VSConstBuffer = nullptr;
-	ID3D11Buffer* PSConstBuffer = nullptr;
+	ConstantBufferD3D11 VSConstBuffer;
+	ConstantBufferD3D11 PSConstBuffer;
 
 	//setting up d3d11
 	if (!SetupD3D11(WIDTH, HEIGHT, window, device, immediateContext, swapChain, rtv, dsTexture, dsView, viewport))
@@ -112,8 +114,11 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
 		return -1;
 	}
 
-	immediateContext->VSSetConstantBuffers(0, 1, &VSConstBuffer);
-	immediateContext->PSSetConstantBuffers(0, 1, &PSConstBuffer);
+	ID3D11Buffer* VSBuffer = VSConstBuffer.GetBuffer();
+	ID3D11Buffer* PSBuffer = PSConstBuffer.GetBuffer();
+
+	immediateContext->VSSetConstantBuffers(0, 1, &VSBuffer);
+	immediateContext->PSSetConstantBuffers(0, 1, &PSBuffer);
 
 	MSG msg = { };
 	
@@ -138,23 +143,18 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
 
 		UpdateAngle(angle);
 
-		//To hold mapped memory
-		D3D11_MAPPED_SUBRESOURCE mappedResource;
-		ZeroMemory(&mappedResource, sizeof(D3D11_MAPPED_SUBRESOURCE));
-
-		immediateContext->Map(VSConstBuffer, 0, D3D11_MAP_WRITE_DISCARD, 0, &mappedResource);
-
 		DirectX::XMStoreFloat4x4(&matrixList[0], CreateWordlMatrix(angle));
-		memcpy(mappedResource.pData, matrixList, sizeof(matrixList));
-		immediateContext->Unmap(VSConstBuffer, 0);
-		
-		Render(immediateContext, rtv, dsView, viewport, vShader, pShader, inputLayout, vertexBuffer, srv, samplerState);
+
+		VSConstBuffer.UpdateBuffer(immediateContext, matrixList);
+
+		Render(immediateContext, rtv, dsView, viewport,
+			vShader, pShader, inputLayout, vertexBuffer, srv, samplerState);
+
 		swapChain->Present(0, 0);
 	}
 
 	/*vertexBuffer.~VertexBufferD3D11();*/  //destuctor calls itself automatically
-	VSConstBuffer->Release();
-	PSConstBuffer->Release();
+	//VS and PS constantbuffer are destroyed by themselves
 	inputLayout->Release();
 	pShader->Release();
 	vShader->Release();
